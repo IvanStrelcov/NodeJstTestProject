@@ -1,16 +1,19 @@
-import { BrowserModule }      from '@angular/platform-browser';
-import { NgModule }           from '@angular/core';
-import { FormsModule }        from '@angular/forms';
-import { HttpModule }         from '@angular/http';
-import { RouterModule }       from '@angular/router';
-import { AppRouting }         from './app.routes';
+import { BrowserModule }          from '@angular/platform-browser';
+import { NgModule }               from '@angular/core';
+import { FormsModule }            from '@angular/forms';
+import { HttpModule }             from '@angular/http';
+import { RouterModule }           from '@angular/router';
 
-import { AppComponent }       from './app.component';
+import { AuthService }            from './services';
+import { CanActivateUserService } from './services';
+import { AppRouting }             from './app.routes';
 
-import { LoginModule }        from './login';
-import { SignUpModule }       from './sign-up';
-import { ReportModule }       from './report';
-import { NoContentComponent } from './no-content/no-content.component';
+import { AppComponent }           from './app.component';
+
+import { LoginModule }            from './login';
+import { SignUpModule }           from './sign-up';
+import { ReportsModule }          from './+reports';
+import { NoContentComponent }     from './no-content/no-content.component';
 
 
 @NgModule({
@@ -25,10 +28,10 @@ import { NoContentComponent } from './no-content/no-content.component';
     RouterModule,
     LoginModule,
     SignUpModule,
-    ReportModule,
+    ReportsModule,
     AppRouting
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [ AuthService, CanActivateUserService ],
+  bootstrap: [ AppComponent ]
 })
 export class AppModule { }

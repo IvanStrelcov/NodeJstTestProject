@@ -3,14 +3,16 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { LoginComponent }       from './login';
 import { SignUpComponent }      from './sign-up';
-import { ReportComponent }      from './report';
+import { ReportsComponent }      from './+reports';
 import { NoContentComponent }   from './no-content';
+
+import { CanActivateUserService }      from './services';
 
 const Routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignUpComponent },
-  { path: 'report', component: ReportComponent },
+  { path: 'reports', component: ReportsComponent, canActivate: [ CanActivateUserService ] },
   { path: '**',    component: NoContentComponent }
 ];
 
