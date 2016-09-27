@@ -10,7 +10,7 @@ import { AppRouting }             from './app.routes';
 
 import { AppComponent }           from './app.component';
 
-import { LoginModule }            from './login';
+import { SignInModule }           from './sign-in';
 import { SignUpModule }           from './sign-up';
 import { ReportsModule }          from './+reports';
 import { NoContentComponent }     from './no-content/no-content.component';
@@ -26,7 +26,7 @@ import { NoContentComponent }     from './no-content/no-content.component';
     FormsModule,
     HttpModule,
     RouterModule,
-    LoginModule,
+    SignInModule,
     SignUpModule,
     ReportsModule,
     AppRouting

@@ -1,16 +1,16 @@
-import { ModuleWithProviders }  from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { ModuleWithProviders }    from '@angular/core';
+import { Routes, RouterModule }   from '@angular/router';
 
-import { LoginComponent }       from './login';
-import { SignUpComponent }      from './sign-up';
-import { ReportsComponent }      from './+reports';
-import { NoContentComponent }   from './no-content';
+import { SignInComponent }        from './sign-in';
+import { SignUpComponent }        from './sign-up';
+import { ReportsComponent }       from './+reports';
+import { NoContentComponent }     from './no-content';
 
-import { CanActivateUserService }      from './services';
+import { CanActivateUserService } from './services';
 
 const Routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent },
+  { path: '', redirectTo: 'signin', pathMatch: 'full' },
+  { path: 'signin', component: SignInComponent },
   { path: 'signup', component: SignUpComponent },
   { path: 'reports', component: ReportsComponent, canActivate: [ CanActivateUserService ] },
   { path: '**',    component: NoContentComponent }

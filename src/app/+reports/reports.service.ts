@@ -1,41 +1,58 @@
-import { Injectable } from '@angular/core';
-import { Http }       from '@angular/http';
+import { Injectable }  from '@angular/core';
+import { Http,
+         Response,
+         Headers,
+         RequestOptions } from '@angular/http';
+import { Observable }     from 'rxjs';
+import { AuthService } from '../services';
 
 @Injectable()
-export class ReportsService {
-  public reports: any =
-  [
-    {
-      id: 0,
-      date: 'Sun Sep 18 2016 18:04:17 GMT+0300 (EEST)',
-      total_time: 9,
-      notes: 'Login&registration, Another note'
-    },
-    {
-      id: 1,
-      date: 'Fri Sep 23 2016 18:04:17 GMT+0300 (EEST)',
-      total_time: 10,
-      notes: 'Login&registration, Another note'
-    },
-    {
-      id: 2,
-      date: 'Mon Sep 12 2016 18:04:17 GMT+0300 (EEST)',
-      total_time: 4,
-      notes: 'Login&registration, Another note'
-    }
-  ]
-  constructor() {}
+export class ReportsService  {
+  private token: any = window.localStorage.getItem('NJTPUserToken');
+  public reports: Array<any> = [];
+
+  constructor( private _http: Http,
+               private _authService: AuthService ) {}
 
   getReports() {
-    return this.reports;
+    let headers = new Headers({ 'Authorization': this.token });
+    let options = new RequestOptions({ headers: headers });
+    return this._http.get(`${this._authService.URL}/reports`, options)
+                     .map(this.extractData)
+                     .catch(this.handleError);
   }
 
   removeReport(id) {
-    const findItem = this.reports.filter( value => value.id === id)[0];
-    findItem && this.reports.splice(this.reports.indexOf(findItem), 1);
+    let headers = new Headers({ 'Authorization': this.token });
+    let options = new RequestOptions({ headers: headers });
+    return this._http.delete(`${this._authService.URL}/reports/${id}`, options)
+                     .catch(this.handleError);
   }
 
-  addReport(obj){
-    this.reports.push(obj);
+  addReport(obj) {
+    let headers = new Headers({ 'Authorization': this.token });
+    let options = new RequestOptions({ headers: headers });
+    return this._http.post(`${this._authService.URL}/reports`, obj, options)
+                     .map(this.extractData)
+                     .catch(this.handleError);
+  }
+
+  updateReport(obj) {
+    let headers = new Headers({ 'Authorization': this.token });
+    let options = new RequestOptions({ headers: headers });
+    return this._http.put(`${this._authService.URL}/reports/${obj.id}`, { date: obj.date, timeTaken: obj.timeTaken,                            description: obj.description }, options)
+                     .map(this.extractData)
+                     .catch(this.handleError);
+  }
+
+  private extractData(res: Response) {
+    let body = res.json();
+    return body;
+  }
+
+  private handleError (error: any) {
+    let errMsg = (error.message) ? error.message :
+        error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+    return Observable.throw(errMsg);
   }
 }

@@ -10,8 +10,8 @@ export class CanActivateUserService implements CanActivate {
               private _router: Router) {}
 
   canActivate() {
-    if (!this._authService.isLoggedIn()) {
-      this._router.navigate(['login']);
+    if (!this._authService.isSignIn()) {
+      this._router.navigate(['signin']);
       return false;
     }
     return true;
